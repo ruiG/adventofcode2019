@@ -8,16 +8,18 @@ testCode2 = [1,9,10,3,2,3,11,0,99,30,40,50]
 
 part1Code = writeTo (writeTo intCode 2 2) 12 1
 
-exec (prog, n)
-    |  prog !! n == 1 = exec ((add (prog, n)), n + 4)
-    |  prog !! n == 2 = exec ((mult (prog, n)), n + 4)
-    |  prog !! n == 99 = (prog, n)
+exec state
+    |  getNextOp state == 1 = exec (add state, incrementIP state)
+    |  getNextOp state == 2 = exec (mult state, incrementIP state)
+    |  getNextOp state == 99 = state
 
 -- Basic ops:
 writeTo prog x n = (take n prog) ++ [x] ++ (drop (n+1) prog)
 
-doubleDreff prog n = prog !! (prog !! n)
+getNextOp (prog, n) = dreff prog n
+incrementIP ( _ , n) = n + 4
 
+doubleDreff prog n = prog !! (prog !! n)
 dreff prog n = prog !! n
 
 -- math ops:
