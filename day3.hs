@@ -9,16 +9,16 @@ dir p = head p
 dist :: String -> Int
 dist p = read (tail p)
 
-getCable startPoint p
+pullCable startPoint p
     | dir p == 'U' = pullUp startPoint (dist p)
     | dir p == 'R' = pullRight startPoint (dist p)
     | dir p == 'D' = pullDown startPoint (dist p)
     | dir p == 'L' = pullLeft startPoint (dist p)
 
 
-pullUp (x,y) n = [(a,b) | a <- [x], b <- [y..(y+n)]]
+pullUp (x,y) n = [(a,b) | a <- [x], b <- (reverse [y..(y+n)])]
 
-pullRight (x,y) n = [(a,b) | a <- [x..(x+n)], b <- [y]]
+pullRight (x,y) n = [(a,b) | a <- (reverse[x..(x+n)]), b <- [y]]
 
 pullDown (x,y) n = [(a,b) | a <- [x], b <- [(y-n)..y]]
 
