@@ -28,3 +28,9 @@ operationN4 (prog, n) op = writeTo prog ((doubleDreff prog (n+1)) `op` (doubleDr
 
 add state = operationN4 state (+)
 mult state = operationN4 state (*)
+
+------ Part 2
+
+gravityIntCode noun verb = writeTo (writeTo intCode verb 2) noun 1
+
+getTheJobDone = [(exec (gravityIntCode noun verb, 0)) | noun <- [0..99], verb <- [0..99], (fst (exec (gravityIntCode noun verb, 0))) !! 0 == 19690720]
